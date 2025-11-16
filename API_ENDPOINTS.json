@@ -1,0 +1,283 @@
+{
+  "api_documentation": {
+    "version": "1.0",
+    "title": "API REST Mr. Pastel",
+    "base_url": "http://localhost:8080/api",
+    "swagger": "http://localhost:8080/swagger-ui.html",
+    "database": "MySQL",
+    "port": 8080,
+    "context_path": "/api",
+    "endpoints": {
+      "auth": [
+        {
+          "method": "POST",
+          "path": "/auth/login",
+          "description": "Login de usuario",
+          "auth_required": false,
+          "params": {
+            "body": {
+              "email": "string",
+              "password": "string"
+            }
+          },
+          "response": {
+            "status": 200,
+            "data": {
+              "token": "JWT string",
+              "type": "Bearer",
+              "email": "string",
+              "nombre": "string",
+              "rol": "USUARIO|ADMIN"
+            }
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/auth/registro",
+          "description": "Registro de nuevo usuario",
+          "auth_required": false,
+          "params": {
+            "body": {
+              "nombre": "string",
+              "email": "string",
+              "password": "string"
+            }
+          },
+          "response": {
+            "status": 201,
+            "data": {
+              "token": "JWT string",
+              "type": "Bearer",
+              "email": "string",
+              "nombre": "string",
+              "rol": "USUARIO"
+            }
+          }
+        }
+      ],
+      "productos": [
+        {
+          "method": "GET",
+          "path": "/productos",
+          "description": "Obtener todos los productos",
+          "auth_required": false,
+          "response": {
+            "status": 200,
+            "data": [
+              {
+                "id": 1,
+                "nombre": "string",
+                "descripcion": "string",
+                "precio": "BigDecimal",
+                "categoria": "string",
+                "stock": "integer",
+                "imagen": "string",
+                "region": "string",
+                "fechaCreacion": "LocalDateTime"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/productos/{id}",
+          "description": "Obtener producto por ID",
+          "auth_required": false,
+          "path_params": {
+            "id": "integer"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/productos/categoria/{categoria}",
+          "description": "Obtener productos por categoría",
+          "auth_required": false,
+          "path_params": {
+            "categoria": "string"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/productos/region/{region}",
+          "description": "Obtener productos por región",
+          "auth_required": false,
+          "path_params": {
+            "region": "string"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/productos/buscar",
+          "description": "Buscar productos por nombre",
+          "auth_required": false,
+          "query_params": {
+            "nombre": "string"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/productos",
+          "description": "Crear nuevo producto (Admin)",
+          "auth_required": true,
+          "params": {
+            "body": {
+              "nombre": "string",
+              "descripcion": "string",
+              "precio": "BigDecimal",
+              "categoria": "string",
+              "stock": "integer",
+              "imagen": "string",
+              "region": "string"
+            }
+          },
+          "response": {
+            "status": 201
+          }
+        },
+        {
+          "method": "PUT",
+          "path": "/productos/{id}",
+          "description": "Actualizar producto (Admin)",
+          "auth_required": true,
+          "path_params": {
+            "id": "integer"
+          },
+          "params": {
+            "body": {
+              "nombre": "string",
+              "descripcion": "string",
+              "precio": "BigDecimal",
+              "categoria": "string",
+              "stock": "integer",
+              "imagen": "string",
+              "region": "string"
+            }
+          },
+          "response": {
+            "status": 200
+          }
+        },
+        {
+          "method": "DELETE",
+          "path": "/productos/{id}",
+          "description": "Eliminar producto (Admin)",
+          "auth_required": true,
+          "path_params": {
+            "id": "integer"
+          },
+          "response": {
+            "status": 204
+          }
+        }
+      ],
+      "carrito": [
+        {
+          "method": "GET",
+          "path": "/carrito/{usuarioId}",
+          "description": "Obtener carrito del usuario",
+          "auth_required": true,
+          "path_params": {
+            "usuarioId": "integer"
+          },
+          "response": {
+            "status": 200,
+            "data": {
+              "id": 1,
+              "items": [
+                {
+                  "id": 1,
+                  "producto": {},
+                  "cantidad": "integer",
+                  "subtotal": "BigDecimal"
+                }
+              ],
+              "total": "BigDecimal"
+            }
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/carrito/{usuarioId}/agregar",
+          "description": "Agregar producto al carrito",
+          "auth_required": true,
+          "path_params": {
+            "usuarioId": "integer"
+          },
+          "query_params": {
+            "productoId": "integer",
+            "cantidad": "integer (default: 1)"
+          },
+          "response": {
+            "status": 200
+          }
+        },
+        {
+          "method": "PUT",
+          "path": "/carrito/{usuarioId}/actualizar-item/{itemId}",
+          "description": "Actualizar cantidad de item",
+          "auth_required": true,
+          "path_params": {
+            "usuarioId": "integer",
+            "itemId": "integer"
+          },
+          "query_params": {
+            "cantidad": "integer"
+          },
+          "response": {
+            "status": 200
+          }
+        },
+        {
+          "method": "DELETE",
+          "path": "/carrito/{usuarioId}/eliminar-item/{itemId}",
+          "description": "Eliminar item del carrito",
+          "auth_required": true,
+          "path_params": {
+            "usuarioId": "integer",
+            "itemId": "integer"
+          },
+          "response": {
+            "status": 200
+          }
+        },
+        {
+          "method": "DELETE",
+          "path": "/carrito/{usuarioId}/vaciar",
+          "description": "Vaciar carrito completamente",
+          "auth_required": true,
+          "path_params": {
+            "usuarioId": "integer"
+          },
+          "response": {
+            "status": 204
+          }
+        }
+      ]
+    },
+    "http_codes": {
+      "200": "OK",
+      "201": "Created",
+      "204": "No Content",
+      "400": "Bad Request",
+      "401": "Unauthorized",
+      "404": "Not Found",
+      "500": "Internal Server Error"
+    },
+    "security": {
+      "type": "JWT",
+      "header": "Authorization",
+      "format": "Bearer {token}",
+      "expiration": 86400000,
+      "algorithm": "HS512"
+    },
+    "cors": {
+      "enabled": true,
+      "allowed_origins": [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "*"
+      ],
+      "allowed_methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    }
+  }
+}
