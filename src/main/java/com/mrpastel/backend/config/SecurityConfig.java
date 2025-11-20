@@ -82,13 +82,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Permitir orígenes específicos (frontend)
-        configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:3000",
-            "http://localhost:3001",
-            "http://127.0.0.1:3000",
-            "http://127.0.0.1:3001"
-        ));
+        // Permitir todos los orígenes (SOLO para desarrollo/testing)
+        // En producción, especifica los orígenes exactos
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         
         // Métodos HTTP permitidos
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
