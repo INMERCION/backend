@@ -26,6 +26,9 @@ public class UsuarioDTO {
     @Schema(example = "12.345.678-9")
     private String rut;
 
+    @Schema(example = "miPassword123", description = "Solo se usa al crear/actualizar usuario")
+    private String password;
+
     @Schema(example = "USUARIO")
     private String rol;
 

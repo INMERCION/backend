@@ -40,11 +40,16 @@ public class UsuarioService {
             throw new RuntimeException("El RUT ya está registrado");
         }
 
+        // Validar que se proporcione una contraseña
+        if (usuarioDTO.getPassword() == null || usuarioDTO.getPassword().trim().isEmpty()) {
+            throw new RuntimeException("La contraseña es obligatoria");
+        }
+
         Usuario usuario = Usuario.builder()
             .nombre(usuarioDTO.getNombre())
             .email(usuarioDTO.getEmail())
             .rut(usuarioDTO.getRut())
-            .password(passwordEncoder.encode("password123")) // Password por defecto
+            .password(passwordEncoder.encode(usuarioDTO.getPassword())) // Encriptar la contraseña del DTO
             .rol(usuarioDTO.getRol() != null ? usuarioDTO.getRol() : "USUARIO")
             .build();
 
@@ -73,6 +78,11 @@ public class UsuarioService {
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setRut(usuarioDTO.getRut());
         usuario.setRol(usuarioDTO.getRol());
+
+        // Solo actualizar contraseña si se proporciona una nueva
+        if (usuarioDTO.getPassword() != null && !usuarioDTO.getPassword().trim().isEmpty()) {
+            usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+        }
 
         Usuario actualizado = usuarioRepository.save(usuario);
         return convertirADTO(actualizado);
