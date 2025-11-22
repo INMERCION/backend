@@ -43,11 +43,6 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.obtenerPorCategoria(categoria));
     }
 
-    @GetMapping("/region/{region}")
-    @Operation(summary = "Obtener productos por región")
-    public ResponseEntity<List<ProductoDTO>> obtenerPorRegion(@PathVariable String region) {
-        return ResponseEntity.ok(productoService.obtenerPorRegion(region));
-    }
 
     @GetMapping("/buscar")
     @Operation(summary = "Buscar productos por nombre")

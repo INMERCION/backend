@@ -39,8 +39,6 @@ public class Producto {
 
     private String imagen;
 
-    private String region;
-
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 

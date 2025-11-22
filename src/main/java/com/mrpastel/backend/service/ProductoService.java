@@ -38,13 +38,6 @@ public class ProductoService {
             .collect(Collectors.toList());
     }
 
-    // READ - Obtener por región
-    public List<ProductoDTO> obtenerPorRegion(String region) {
-        return productoRepository.findByRegion(region)
-            .stream()
-            .map(this::convertirADTO)
-            .collect(Collectors.toList());
-    }
 
     // READ - Buscar por nombre
     public List<ProductoDTO> buscar(String nombre) {
@@ -63,7 +56,6 @@ public class ProductoService {
             .categoria(dto.getCategoria())
             .stock(dto.getStock())
             .imagen(dto.getImagen())
-            .region(dto.getRegion())
             .build();
 
         Producto guardado = productoRepository.save(producto);
@@ -81,7 +73,6 @@ public class ProductoService {
         producto.setCategoria(dto.getCategoria());
         producto.setStock(dto.getStock());
         producto.setImagen(dto.getImagen());
-        producto.setRegion(dto.getRegion());
 
         Producto actualizado = productoRepository.save(producto);
         return convertirADTO(actualizado);
@@ -104,7 +95,6 @@ public class ProductoService {
             .categoria(producto.getCategoria())
             .stock(producto.getStock())
             .imagen(producto.getImagen())
-            .region(producto.getRegion())
             .fechaCreacion(producto.getFechaCreacion())
             .build();
     }
