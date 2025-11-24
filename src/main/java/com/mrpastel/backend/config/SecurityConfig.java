@@ -48,12 +48,15 @@ public class SecurityConfig {
                 // 1. Autenticación (Login y Registro)
                 .requestMatchers("/api/auth/**").permitAll()
                 
-                // 2. Swagger UI
+                // 2. Swagger UI - CRÍTICO: incluir /v3/api-docs sin /**
                 .requestMatchers(
-                    "/swagger-ui.html",
                     "/swagger-ui/**",
+                    "/swagger-ui.html",
                     "/v3/api-docs/**",
-                    "/api-docs/**"
+                    "/v3/api-docs",        // CRÍTICO: Sin este da 403
+                    "/api-docs/**",
+                    "/swagger-resources/**",
+                    "/webjars/**"
                 ).permitAll()
                 
                 // 3. Productos - TODOS los endpoints GET son públicos
@@ -84,9 +87,12 @@ public class SecurityConfig {
         
         // Permitir orígenes específicos con Elastic IP fija
         configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:3000",
+            "http://localhost:3000",      // React Create App
+            "http://localhost:8080",      // Mismo servidor (Swagger)
+            "http://localhost:5173",      // Vite
             "http://127.0.0.1:3000",
-            "http://3.221.224.59:3000"  // Elastic IP fija de EC2
+            "http://127.0.0.1:5500",      // Live Server VSCode
+            "http://3.221.224.59:3000"    // Elastic IP fija de EC2
         ));
         
         // Métodos HTTP permitidos
