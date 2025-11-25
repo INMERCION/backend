@@ -26,6 +26,10 @@ import org.springframework.context.annotation.Configuration;
         @Server(
             url = "http://localhost:8080",
             description = "Servidor de Desarrollo Local"
+        ),
+        @Server(
+            url = "http://98.91.93.249:8080",
+            description = "Servidor EC2 - Producción"
         )
     },
     security = @SecurityRequirement(name = "Bearer Authentication")

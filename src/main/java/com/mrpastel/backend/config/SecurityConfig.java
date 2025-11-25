@@ -92,7 +92,7 @@ public class SecurityConfig {
             "http://localhost:5173",      // Vite
             "http://127.0.0.1:3000",
             "http://127.0.0.1:5500",      // Live Server VSCode
-            "http://3.221.224.59:3000"    // Elastic IP fija de EC2
+            "http://98.91.93.249:3000"    // Elastic IP fija de EC2
         ));
         
         // Métodos HTTP permitidos
