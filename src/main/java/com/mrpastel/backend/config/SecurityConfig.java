@@ -65,10 +65,13 @@ public class SecurityConfig {
                 // 4. Contacto - público
                 .requestMatchers(HttpMethod.POST, "/api/contacto").permitAll()
                 
-                // 5. Usuarios - requiere autenticación (GET, POST, PUT, DELETE)
+                // 5. Pagos con Stripe - públicos (necesario para webhooks y creación de intents)
+                .requestMatchers("/api/pagos/**").permitAll()
+                
+                // 6. Usuarios - requiere autenticación (GET, POST, PUT, DELETE)
                 .requestMatchers("/api/usuarios/**").authenticated()
                 
-                // 6. Pedidos - requiere autenticación
+                // 7. Pedidos - requiere autenticación
                 .requestMatchers("/api/pedidos/**").authenticated()
                 
                 // --- ENDPOINTS PRIVADOS ---
